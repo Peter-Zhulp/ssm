@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:property-placeholder location="classpath:emv.properties" />
+    <!--开启注解扫描 controller-->
+    <context:component-scan base-package="com.qf.controller,com.qf.utils,com.qf.handler" />
+    <!--mvc注解驱动(包含了处理器映射器和处理器适配器,还有其他功能)-->
+    <mvc:annotation-driven />
+    <!--视图解析器-->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/jsp/" />
+        <property name="suffix" value=".jsp" />
+    </bean>
+    <!--基于Tomcat对静态资源放行-->
+    <mvc:default-servlet-handler />
+    <!--
+        /static/js/jquery.min.js
+        静态资源访问路径
+    -->
+    <!--基于springmvc手动放行-->
+    <!--<mvc:resources mapping="/static/**" location="/static/" />-->
+    <!--配置文件上传项-->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!--<property name="maxUploadSize" value="5242880"-->
+    </bean>
+    <!--springmvc拦截器-->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <mvc:exclude-mapping path="/user/**"/>
+            <mvc:exclude-mapping path="/static/**" />
+            <bean class="com.qf.interceptor.AuthenticationInterceptor" />
+        </mvc:interceptor>
+    </mvc:interceptors>
+
+</beans>
