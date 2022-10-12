@@ -119,7 +119,7 @@
         <dependency>
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-core</artifactId>
-            <version>1.4.0</version>
+            <version>1.10.0</version>
         </dependency>
         <!--上传图片需要的两个依赖-->
         <!-- https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload -->
